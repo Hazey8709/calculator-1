@@ -119,7 +119,6 @@ clearAllEl.addEventListener("click", () => {
     display2El.innerText = "";
     result = "";
     tempResultEl.innerText = "";
-    memoryOperations.length = 0; //s Clear Memory Op
     displayMemoryOperations(); //s Update memory display
 });
 
