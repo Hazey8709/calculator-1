@@ -7,13 +7,20 @@
         <link rel="stylesheet" href="cal-style.css" />
     </head>
     <body>
+        <div class="info"></div>
         <section>
             <div class="container">
                 <div class="calculator">
                     <div class="display">
-                        <div class="display-1">0</div>
+                        <div class="operation">
+                            <p>Operation</p>
+                            <div class="display-1"></div>
+                        </div>
                         <div class="display-2">0</div>
-                        <div class="temp-result"></div>
+                        <div class="last-total">
+                            <p>Last Result</p>
+                            <div class="temp-result"></div>
+                        </div>
                     </div>
                     <div class="all_button">
                         <div class="button all-clear">C</div>
@@ -39,6 +46,13 @@
                 </div>
             </div>
         </section>
+
+        <div class="memory_Cont">
+            <h2>Memory</h2>
+            <div id="memory-operations"></div>
+            <button class="clearMemory-Btn" id="clear-memory">Clear</button>
+        </div>
+
         <script src="cal-jav.js"></script>
     </body>
 </html>
