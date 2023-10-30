@@ -8,12 +8,36 @@ const operationEl = document.querySelectorAll(".operation");
 const equalEl = document.querySelector(".equal");
 const clearAllEl = document.querySelector(".all-clear");
 const clearLastEl = document.querySelector(".last-entity-clear");
+
+//* Memory box features
+const memoryOperations = [];
+const memoryEl = document.getElementById("memory-operations");
+
+//* Load Ops from Local Storage
+function loadMemoryOperations() {
+    const savedMemoryOperations = localStorage.getItem("memory-operations");
+    if (savedMemoryOperations) {
+        memoryOperations.push(...JSON.parse(savedMemoryOperations));
+        displayMemoryOperations();
+    }
+}
+
+//* Save Ops to Local Storage
+function saveMemoryOperations() {
+    localStorage.setItem("memory-operations", JSON.stringify(memoryOperations));
+}
+
+//* Load Ops (When page loads)
+loadMemoryOperations();
+
+//* Variables
 let dis1Num = "";
 let dis2Num = "";
 let result = null;
 let lastOperation = "";
 let haveDot = false;
 
+//* Numbers (ForEach)
 numbersEl.forEach((number) => {
     number.addEventListener("click", (e) => {
         if (e.target.innerText === "." && !haveDot) {
@@ -23,10 +47,11 @@ numbersEl.forEach((number) => {
         }
         dis2Num += e.target.innerText;
         display2El.innerText = dis2Num;
-        // console.log();
+        console.log(number);
     });
 });
 
+//* Operations (ForEach)
 operationEl.forEach((operation) => {
     operation.addEventListener("click", (e) => {
         if (!dis2Num) return;
@@ -42,6 +67,8 @@ operationEl.forEach((operation) => {
         console.log(result);
     });
 });
+
+//* Clear Variables
 function clearVar(name = "") {
     dis1Num += dis2Num + " " + name + " ";
     display1El.innerText = dis1Num;
@@ -50,6 +77,7 @@ function clearVar(name = "") {
     tempResultEl.innerText = result;
 }
 
+//* Math Ops
 function mathOperation() {
     if (lastOperation === "x") {
         result = parseFloat(result) * parseFloat(dis2Num);
@@ -63,19 +91,27 @@ function mathOperation() {
         result = parseFloat(result) % parseFloat(dis2Num);
     }
 }
-// operation();
 
+//* Display memory & line break
+function displayMemoryOperations() {
+    memoryEl.innerText = memoryOperations.join("; ");
+    saveMemoryOperations(); //s Calls function
+}
+
+//* Equal Event
 equalEl.addEventListener("click", () => {
-    if (!dis2Num || !dis1Num) return;
+    if (!dis1Num || !dis2Num || !lastOperation) return;
     haveDot = false;
     mathOperation();
-    clearVar();
     display2El.innerText = result;
-    tempResultEl.innerText = "";
-    dis2Num = result;
+    memoryOperations.push(dis1Num + dis2Num + " = " + result); //s Store the operation in the memory array
     dis1Num = "";
+    dis2Num = result.toString();
+    lastOperation = "";
+    displayMemoryOperations(); // Update memory display
 });
 
+//* Clear Event
 clearAllEl.addEventListener("click", () => {
     dis1Num = "";
     dis2Num = "";
@@ -83,11 +119,20 @@ clearAllEl.addEventListener("click", () => {
     display2El.innerText = "";
     result = "";
     tempResultEl.innerText = "";
+    displayMemoryOperations(); //s Update memory display
 });
 
+//* Clear Last Event
 clearLastEl.addEventListener("click", () => {
     display2El.innerText = "";
     dis2Num = "";
+});
+
+//* Clear Memory
+const clearMemoryEl = document.getElementById("clear-memory");
+clearMemoryEl.addEventListener("click", () => {
+    memoryOperations.length = 0; //s Clear memory Op
+    displayMemoryOperations(); //s Calls Function
 });
 
 window.addEventListener("keydown", (e) => {
@@ -121,6 +166,7 @@ window.addEventListener("keydown", (e) => {
     }
     // console.log(e.key)
 });
+
 function clickButtonEl(key) {
     numbersEl.forEach((button) => {
         if (button.innerText === key) {
@@ -128,6 +174,7 @@ function clickButtonEl(key) {
         }
     });
 }
+
 function clickOperation(key) {
     operationEl.forEach((operation) => {
         if (operation.innerText === key) {
@@ -135,6 +182,7 @@ function clickOperation(key) {
         }
     });
 }
+
 function clickEqual() {
     equalEl.click();
 }

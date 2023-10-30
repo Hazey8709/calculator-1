@@ -7,13 +7,21 @@
         <link rel="stylesheet" href="cal-style.css" />
     </head>
     <body>
+        <h1>Calculator</h1>
+
         <section>
             <div class="container">
                 <div class="calculator">
                     <div class="display">
-                        <div class="display-1">0</div>
+                        <div class="operation">
+                            <p>Operation</p>
+                            <div class="display-1"></div>
+                        </div>
                         <div class="display-2">0</div>
-                        <div class="temp-result"></div>
+                        <div class="last-total">
+                            <p>Last Result</p>
+                            <div class="temp-result"></div>
+                        </div>
                     </div>
                     <div class="all_button">
                         <div class="button all-clear">C</div>
@@ -39,6 +47,29 @@
                 </div>
             </div>
         </section>
+
+        <div class="memory_Cont">
+            <h2>Memory</h2>
+            <div id="memory-operations"></div>
+            <button class="clearMemory-Btn" id="clear-memory">Clear</button>
+        </div>
+
+        <div class="contactInfo_Cont">
+            <h3>Information</h3>
+            <p>
+                The calculator can do basic math operations including using a
+                decimal & percentages. Operation will show math operation
+                working on. Last Result will show total of last calculated
+                operation. Memory box uses local storage to save operations for
+                further use and the clear button delete all in memory box.
+                Operations are separated by a " ; "
+            </p>
+            <br />
+            <p>
+                Comments, Questions or Concerns feel free to contact Noobie J
+                <a href="mailto:jfmac.sudo@icloud.com">Email</a>
+            </p>
+        </div>
         <script src="cal-jav.js"></script>
     </body>
 </html>
